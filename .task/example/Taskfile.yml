@@ -1,0 +1,105 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING:
+    sh: echo "Hello, $(whoami)!"
+  #WEATHER:
+  #  sh: curl -s wttr.in?format=j1 | jq -r .current_condition[0].weatherDesc[0].value
+  #WEATHER_FILE: /tmp/weather.json
+
+tasks:
+
+  default:
+    desc: List all example tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'example:'
+
+
+  greetings:
+    desc: Greetings Task
+    deps:
+      - weather-download
+    prefix: ⚙️ > greetings
+    cmds:
+      - echo "{{.GREETING}}"
+      - echo "Today is {{.TODAY}}"
+      # - echo "The weather is {{.WEATHER}}"
+      #- echo "There be $(cat {{.WEATHER_FILE}} | jq -r .current_condition[0].weatherDesc[0].value)"
+
+  #weather-download:
+  #  desc: Downloads a weather forecast into a file
+  #  cmds:
+  #    - curl -s wttr.in?format=j1 > {{.WEATHER_FILE}}
+  #  status:
+  #    - test -f ./{{.WEATHER_FILE}}
+  #  silent: true
+
+
+  example1:
+    desc: Example Task
+    prefix: ⚙️ > example1
+    cmds:
+      - echo -e "{{.light_cyan}} 🔥 {{ .reversed }} To-Do  {{.nocolor}}"
+      - echo -e "{{.green}} ✅ Command succeeded, validated homebrew installed {{.nocolor}}"
+      - echo -e "{{.red}} ❗ Command failed. Homebrew not detected {{.nocolor}}"
+      - echo -e "{{.light_gray}} ℹ {{ .reversed }} Info {{ .nocolor }}"
+
+  example2:
+    desc: Example Task - Same shell process
+    prefix: ⚙️ > example2
+    cmds:
+      - |
+        echo -e "{{.light_cyan}} 🔥 {{ .reversed }} To-Do  {{.nocolor}}"
+        echo -e "{{.green}} ✅ Command succeeded, validated homebrew installed {{.nocolor}}"
+        echo -e "{{.red}} ❗ Command failed. Homebrew not detected {{.nocolor}}"
+        echo -e "{{.light_gray}} ℹ {{ .reversed }} Info {{ .nocolor }}"
+
+
+  shell-export:
+    desc: Export shell variables "usage - eval $(task example:shell-export)"
+    cmds:
+      - echo "export TODAY={{.TODAY}}"
+      # - echo "export TODAY={{.TODAY}}" > .env
+    silent: true
+
+
+  echo-env:
+    desc: Echo environment value (usage - ENV_TODAY=cli_override task example:echo-env)
+    dir: '{{.USER_WORKING_DIR}}'
+    prefix: 📢
+    # dotenv: ["{{.USER_WORKING_DIR}}/.env_echo"] # dotenv does not work
+    cmds:
+      - |
+        test -f {{.USER_WORKING_DIR}}/.env_echo || echo "{{.USER_WORKING_DIR}}/.env_echo not found"
+        test -z {{.ENV_TODAY}} && echo "ENV_TODAY is empty" || echo "ENV_TODAY={{.ENV_TODAY}}"
+    # vars: # uncomment to override; env does not work
+    #   ENV_TODAY: "task_override"
+
+  echo-cli:
+    desc: Run a command with one argument
+    dir: '{{.USER_WORKING_DIR}}'
+    prefix: 📢
+    cmds:
+      - |
+        test -z {{.CLI_ARGS}} && echo "no arguements passed" || echo "CLI_ARGS={{.CLI_ARGS}}"
+
+
+  run-*-*:
+    desc: Run a command with two arguments
+    dir: '{{.USER_WORKING_DIR}}'
+    vars:
+      ARG_1: '{{index .MATCH 0}}'
+      ARG_2: '{{index .MATCH 1}}'
+    cmds:
+      - echo {{.ARG_1}} {{.ARG_2}}
+
+
+  open:
+    desc: Open example taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/example/Taskfile.yml
+    silent: true

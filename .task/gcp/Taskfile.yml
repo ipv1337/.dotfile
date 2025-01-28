@@ -1,0 +1,101 @@
+# https://taskfile.dev
+
+version: '3'
+
+includes:
+  gke: ./gke/Taskfile.yml
+
+vars:
+  COMMON_AUTH_PROJECT_ID: prj-flyr-com-auth-hub-f4c3
+
+tasks:
+
+  default:
+    desc: List all GCP tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'gcp:'
+
+
+  gcloud-info:
+    desc: Gcloud Info
+    prefix: ⚙️ > gcloudinfo
+    cmds:
+      - gcloud info {{.CLI_ARGS}}
+
+  gcloud-json-info:
+    desc: Gcloud Info JSON
+    prefix: ⚙️ > gcloud-info
+    cmds:
+      - gcloud info --format=json {{.CLI_ARGS}}
+
+  gcloud-config-list:
+    desc: Config List
+    prefix: ⚙️ > gcloud-config-list
+    cmds:
+      - gcloud config list {{.CLI_ARGS}}
+
+  gcloud-config-projects-list:
+    desc: Config List Projects
+    prefix: ⚙️ > gcloud-config-list-projects
+    cmds:
+      - gcloud projects list {{.CLI_ARGS}}
+
+  gcloud-config-accounts-list:
+    desc: Config List Accounts
+    prefix: ⚙️ > gcloud-config-list-accounts
+    cmds:
+      - gcloud auth list {{.CLI_ARGS}}
+
+  gcloud-config-accounts-json-list:
+    desc: Config List Accounts
+    prefix: ⚙️ > gcloud-config-list-accounts
+    cmds:
+      - gcloud auth list --format=json {{.CLI_ARGS}}
+
+  gcloud-config-activations-list:
+    desc: Config List Activations
+    prefix: ⚙️ > gcloud-config-list-activations
+    cmds:
+      - gcloud auth list {{.CLI_ARGS}}
+
+
+  gcloud-iap-oauth-brands-list:
+    desc: IAP OAuth Brands List
+    cmds:
+      - gcloud iap oauth-brands list --project={{.COMMON_AUTH_PROJECT_ID}} {{.CLI_ARGS}}
+
+
+  # TODO: Setup a service account impersonation
+  # https://cloud.google.com/artifact-registry/docs/docker/authentication#token
+  # gcloud auth print-access-token \
+  #     --impersonate-service-account gar-reader-sa@<>.iam.googleapis.com | docker login \
+  #     -u oauth2accesstoken \
+  #     --password-stdin https://europe-docker.pkg.dev
+  gcloud-auth-adc-docker-login:
+    desc: Docker Login ADC
+    cmds:
+      - |
+        gcloud auth print-access-token \
+        james.nguyen@flyrlabs.com | docker login \
+        -u oauth2accesstoken \
+        --password-stdin https://europe-docker.pkg.dev
+
+
+  gcloud-components-list:
+    desc: Components List
+    cmds:
+      - gcloud components list
+  
+  gcloud-components-update:
+    desc: Components Update
+    cmds:
+      - gcloud components update
+
+
+  open:
+    desc: Open gcp taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/gcp/Taskfile.yml
+    silent: true

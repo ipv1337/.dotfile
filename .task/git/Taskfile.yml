@@ -1,0 +1,82 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+
+  default:
+    desc: List all git tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'git:'
+
+
+  branch:
+    desc: List all local branches
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git branch --verbose
+    interactive: true
+
+  branch-clean:
+    desc: Remove all local branches except the current one
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git branch | grep -v "*" | xargs git branch -d
+
+  branch-clean-force:
+    desc: Remove all local branches except the current one (force)
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git branch | grep -v "*" | xargs git branch -D
+
+  branch-new-dev:
+    desc: Create a new branch
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git fetch --all
+      - git checkout -b dev origin/dev
+
+  branch-new-main:
+    desc: Create a new branch
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git fetch --all
+      - git checkout -b main origin/main
+
+
+  pull:
+    desc: Pull changes from remote
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git pull --ff-only
+      - git status
+    aliases:
+      - sync
+
+  pull-all:
+    desc: Pull changes from remote (usage - task git:pull-all -- dir_prefix-*)
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - for i in `ls -d {{default "*/" .CLI_ARGS}}`; do echo -e "{{.green}} ⏳ Updating $i {{.nocolor}}"; cd $i; git pull --ff-only; cd -; done
+
+
+  log:
+    desc: Show git log
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git log --oneline --graph --decorate
+
+  log-all:
+    desc: Show git log
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - git log --oneline --graph --decorate --all
+
+
+  open:
+    desc: Open git taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/git/Taskfile.yml
+    silent: true

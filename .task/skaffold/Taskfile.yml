@@ -1,0 +1,53 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+
+  default:
+    desc: List all skaffold tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'skaffold:'
+
+
+  init:
+    desc: Initialize skaffold
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - skaffold init {{.CLI_ARGS}}
+
+  dev:
+    desc: Run skaffold dev
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - skaffold dev {{.CLI_ARGS}}
+
+  build:
+    desc: Run skaffold build
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - skaffold build {{.CLI_ARGS}}
+
+  test:
+    desc: Run skaffold test
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - skaffold test {{.CLI_ARGS}}
+
+  render:
+    desc: Run skaffold render
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - skaffold render {{.CLI_ARGS}}
+
+
+  open:
+    desc: Open skaffold taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/skaffold/Taskfile.yml
+    silent: true

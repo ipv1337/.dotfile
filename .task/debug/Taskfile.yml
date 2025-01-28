@@ -1,0 +1,43 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+
+  default:
+    desc: List all debug tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'debug:'
+
+
+  dir-args:
+    dir: '{{.USER_WORKING_DIR}}'
+    prefix: ⚙️
+    cmds:
+      - echo "{{.GREETING}}"
+      - for i in `ls -d {{.CLI_ARGS}}`; do echo "⏳ Updating $i"; cd -; done
+    silent: true
+
+
+  pwd-home:
+    desc: Print home directory of Taskfile
+    cmds:
+      - pwd
+
+  pwd-working-dir:
+    desc: Print working directory
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - pwd
+
+
+  open:
+    desc: Open debug taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/debug/Taskfile.yml
+    silent: true

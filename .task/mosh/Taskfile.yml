@@ -1,0 +1,27 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+
+  default:
+    desc: List mosh tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'mosh:'
+
+
+  macos:
+    desc: Shell into MacOS host
+    cmds:
+      - mosh --server=/opt/homebrew/bin/mosh-server {{.CLI_ARGS}}
+    interactive: true
+
+
+  open:
+    desc: Open main taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/mosh/Taskfile.yml
+    silent: true
+

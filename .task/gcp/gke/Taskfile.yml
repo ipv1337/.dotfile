@@ -1,0 +1,68 @@
+# https://taskfile.dev
+
+version: '3'
+
+# env:
+#   GKE_PROJECT_ID: 'examples-project'
+#   GKE_REGION: 'europe-west3'
+#   GKE_ZONE: 'europe-west3-c'
+#   GKE_CLUSTER_NAME: 'examples-cluster'
+#   GKE_KUBE_CONTEXT: 'gke_prj-rx-dev-ooms-bec7_europe-west3_ooms-rx-dev-euw3-1'
+
+tasks:
+
+  # start:
+  #   desc: Start GKE cluster
+  #   cmds:
+  #     - gcloud container clusters start <cluster-name>
+  #   silent: true
+
+  # stop:
+  #   desc: Stop GKE cluster
+  #   cmds:
+  #     - gcloud container clusters stop <cluster-name>
+  #   silent: true
+
+  # restart:
+  #   desc: Restart GKE cluster
+  #   cmds:
+  #     - gcloud container clusters stop <cluster-name>
+  #     - gcloud container clusters start <cluster-name>
+  #   silent: true
+
+  status:
+    desc: Check GKE cluster status
+    cmds:
+      - gcloud container clusters describe <cluster-name> --format='value(status)'
+    silent: true
+
+  list:
+    desc: List GKE clusters
+    cmds:
+      - gcloud container clusters list
+    silent: true
+
+  # ssh:
+  #   desc: SSH into GKE cluster node
+  #   cmds:
+  #     - gcloud compute ssh <node-name> --zone=<zone> --project=<project-id>
+  #   silent: true
+
+  logs:
+    desc: Show GKE cluster logs
+    cmds:
+      - gcloud container clusters get-logs <cluster-name>
+    silent: true
+
+  logs-follow:
+    desc: Show GKE cluster logs (follow)
+    cmds:
+      - gcloud container clusters get-logs <cluster-name> --follow
+    silent: true
+
+  logs-tail:
+    desc: Show GKE cluster logs (tail)
+    cmds:
+      - gcloud container clusters get-logs <cluster-name> --tail
+    silent: true
+  

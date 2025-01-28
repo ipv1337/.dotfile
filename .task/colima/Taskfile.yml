@@ -1,0 +1,71 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+
+  default:
+    desc: List all Colima tasks
+    prefix: ⚙️ 
+    cmds:
+      - task {{default "--list" .CLI_ARGS}} | grep --color=always 'colima:'
+
+
+  start:
+    desc: Start Colima container
+    cmds:
+      - colima start
+
+  stop:
+    desc: Stop Colima container
+    cmds:
+      - colima stop
+
+  restart:
+    desc: Restart Colima container
+    cmds:
+      - colima restart
+
+  status:
+    desc: Check Colima container status
+    cmds:
+      - colima status {{.CLI_ARGS}}
+
+  profiles:
+    desc: List Colima profiles
+    cmds:
+      - colima ls {{.CLI_ARGS}}
+
+  restart-force:
+    desc: Force restart Colima container
+    cmds:
+      - colima restart --force
+
+  ssh:
+    desc: SSH into Colima container
+    cmds:
+      - colima ssh
+    interactive: true
+
+  logs:
+    desc: Show Colima container logs
+    cmds:
+      - colima logs
+
+  logs-follow:
+    desc: Show Colima container logs (follow)
+    cmds:
+      - colima logs --follow
+
+  logs-tail:
+    desc: Show Colima container logs (tail)
+    cmds:
+      - colima logs --tail
+
+
+  open:
+    desc: Open colima taskfile
+    prefix: ⚙️
+    cmds:
+      - open {{.HOME}}/.task/colima/Taskfile.yml
+    silent: true
