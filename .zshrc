@@ -112,4 +112,7 @@ alias cat="bat"
 eval "$(task --completion zsh)"
 eval "$(colima completion zsh)"
 
-export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
+# Mise: this sets up interactive sessions
+eval "$(mise activate zsh)"
+
+export JAVA_HOME="$(irname $(dirname $(realpath $(which javac))))"
