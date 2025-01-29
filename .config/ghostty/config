@@ -1,0 +1,15 @@
+# https://ghostty.org/docs/config/reference
+
+window-decoration = true
+background-opacity = 0.75
+background-blur-radius = 10
+bold-is-bright = true
+
+copy-on-select = true
+shell-integration = zsh
+window-save-state = always
+quit-after-last-window-closed = true
+
+#keybind = ctrl+z=close_surface
+#keybind = ctrl+a=new_split:right
+
