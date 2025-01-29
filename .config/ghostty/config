@@ -12,4 +12,3 @@ quit-after-last-window-closed = true
 
 #keybind = ctrl+z=close_surface
 #keybind = ctrl+a=new_split:right
-
