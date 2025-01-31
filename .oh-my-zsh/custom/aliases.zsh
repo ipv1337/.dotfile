@@ -1,5 +1,10 @@
-alias cat="bat"
 alias zsrc="source ~/.zshrc"
+alias zdot="cd ${HOME}/.dotfile && stow . && cd -"
+
+alias c="bat"
+alias cat="bat"
+alias v="nvim"
+alias vi="nvim"
 
 #alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#$(scutil --get LocalHostName)"
 alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#James-MacBook-Pro"
