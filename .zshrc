@@ -1,6 +1,5 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -104,15 +103,4 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#$(scutil --get LocalHostName)"
-alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#James-MacBook-Pro"
-alias cat="bat"
 
-# Completion
-eval "$(task --completion zsh)"
-eval "$(colima completion zsh)"
-
-# Mise: this sets up interactive sessions - https://mise.jdx.dev/dev-tools/shims.html#how-to-add-mise-shims-to-path
-eval "$(mise activate zsh)"
-
-export JAVA_HOME="$(irname $(dirname $(realpath $(which javac))))"
