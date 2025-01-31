@@ -1,4 +1,5 @@
 alias cat="bat"
+alias zsrc="source ~/.zshrc"
 
 #alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#$(scutil --get LocalHostName)"
 alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#James-MacBook-Pro"
