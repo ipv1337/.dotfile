@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:/opt/homebrew/opt/openjdk/bin:$PATH
+export PATH=$HOME/bin:/opt/homebrew/opt/openjdk/bin:/usr/local/bin:$PATH
 
 export EDITOR='vim'
 
