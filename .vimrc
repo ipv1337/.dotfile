@@ -1,3 +1,8 @@
+" Use the Solarized Dark theme
+set background=dark
+colorscheme solarized
+let g:solarized_termtrans=1
+
 :set ts=2
 
 :set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
