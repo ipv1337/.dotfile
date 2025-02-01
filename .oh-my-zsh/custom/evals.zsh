@@ -1,5 +1,5 @@
 # Completion
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 eval "$(task --completion zsh)"
 eval "$(colima completion zsh)"
 
