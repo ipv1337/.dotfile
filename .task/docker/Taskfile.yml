@@ -194,6 +194,16 @@ tasks:
       # - docker run --rm -v $(pwd):/app -w /app stripe/stripe-cli {{.CLI_ARGS}}
       - docker run --rm -it stripe/stripe-cli:latest {{.CLI_ARGS}}
 
+  debug-amd64-run:
+    desc: Run x86_64 debug container
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - |
+        docker run --rm -it \
+        -u 501 \
+        --platform linux/x86_64 \
+        amd64/fedora:latest sh
+
 
   open:
     desc: Open docker taskfile

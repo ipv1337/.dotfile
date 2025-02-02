@@ -30,6 +30,13 @@ tasks:
     cmds:
       - kubectl get pods --all-namespaces
 
+  pod-debug-amd64-run:
+    desc: Run debug pod in current namespace
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - kubectl run -i --tty --rm debug --privileged=true --image=amd64/fedora --restart=Never --overrides='{"spec":{"template":{"spec":{"containers":[{"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_ADMIN","NET_RAW"]}}}]}}}}' --restart=Never -- sh
+    interactive: true
+
   pod-debug-run:
     desc: Run debug pod in current namespace
     dir: '{{.USER_WORKING_DIR}}'
