@@ -188,11 +188,22 @@ tasks:
 
   stripe-run:
     desc: Run stripe in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: '{{.USER_WORKING_DIR}}}'
     cmds:
       # - docker run --rm -it stripe/stripe-cli:latest customers list --api-key sk_test_51PZleGCMY5ml3pDvjOyLkwBpZegXFhyPyZAcwzrnxfYGyAvvPlm3qfKHOvKnrsYHucsFI36mrd8SXJHeXnK2HSqG00W8yL5oMT
       # - docker run --rm -v $(pwd):/app -w /app stripe/stripe-cli {{.CLI_ARGS}}
       - docker run --rm -it stripe/stripe-cli:latest {{.CLI_ARGS}}
+
+
+  debug-amd64-build:
+    desc: Build x86_64 debug container
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - |
+        docker buildx build . \
+        --platform linux/x86_64 \
+        -t debug \
+        -f Dockerfile.debug
 
   debug-amd64-run:
     desc: Run x86_64 debug container
@@ -200,9 +211,29 @@ tasks:
     cmds:
       - |
         docker run --rm -it \
+        --privileged \
+        --platform linux/x86_64 \
+        debug bash
+
+  debug-fedora-amd64-run:
+    desc: Run x86_64 debug container
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - |
+        docker run --rm -it \
         -u 501 \
+        -v '{{.USER_WORKING_DIR}}':/data \
         --platform linux/x86_64 \
         amd64/fedora:latest sh
+
+        # https://github.com/GoogleContainerTools/kaniko?tab=readme-ov-file#running-kaniko-in-docker
+        #docker run \
+        #    -v "$HOME"/.config/gcloud:/root/.config/gcloud \
+        #    -v /path/to/context:/workspace \
+        #    gcr.io/kaniko-project/executor:latest \
+        #    --dockerfile /workspace/Dockerfile \
+        #    --destination "gcr.io/$PROJECT_ID/$IMAGE_NAME:$TAG" \
+        #    --context dir:///workspace/
 
 
   open:
