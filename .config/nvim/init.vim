@@ -1,4 +1,5 @@
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
+highlight Normal guibg=none
+highlight NonText guibg=none
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
 
