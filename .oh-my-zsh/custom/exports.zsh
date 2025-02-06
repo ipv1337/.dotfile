@@ -8,5 +8,8 @@ export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
 export CONTAINERS_MACHINE_PROVIDER=libkrun
 export DOCKER_HOST=unix:///var/run/docker.sock
 
+# K9s
+K9S_FEATURE_GATE_NODE_SHELL=true
+
 export XDG_CONFIG_HOME=~/.config
 export HOMEBREW_NO_ANALYTICS=1
