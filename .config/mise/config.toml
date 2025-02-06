@@ -1,6 +1,7 @@
 # https://mise.jdx.dev/configuration.html
 
 [tools]
+argocd = "latest"
 node = "23"
 terraform = "latest"
 
