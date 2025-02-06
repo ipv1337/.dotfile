@@ -51,7 +51,7 @@ k9s:
   # Provide shell pod customization when nodeShell feature gate is enabled!
   shellPod:
     # The shell pod image to use.
-    image: killerAdmin
+    image: fedora
     # The namespace to launch to shell pod into.
     namespace: default
     # The resource limit to set on the shell pod.
