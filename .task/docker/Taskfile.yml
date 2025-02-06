@@ -1,51 +1,47 @@
 # https://taskfile.dev
 
-version: '3'
+version: "3"
 
 tasks:
-
   default:
     desc: List all docker tasks
-    prefix: ⚙️ 
+    prefix: ⚙️
     cmds:
       - task {{default "--list" .CLI_ARGS}} | grep --color=always 'docker:'
 
-
   info:
     desc: Display cluster info
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker info
 
   images:
     desc: List images
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker images
 
   images-prune:
     desc: Prune images
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker image prune -a
 
   image-inspect:
     desc: Inspect image
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker image inspect {{.CLI_ARGS}}
 
-
   system-prune:
     desc: Prune all
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - docker system prune -a
 
-
   tfdkr-init:
     desc: Run terraform in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -75,7 +71,7 @@ tasks:
 
   tfdkr-plan:
     desc: Run terraform in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -90,7 +86,7 @@ tasks:
 
   tfdkr-fmt:
     desc: Run terraform in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -105,7 +101,7 @@ tasks:
 
   tfdkr-state-ls:
     desc: Run terraform in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -120,7 +116,7 @@ tasks:
 
   tfdkr-state-save:
     desc: Run terraform in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -133,10 +129,9 @@ tasks:
         --entrypoint /usr/bin/env \
         hashicorp/terraform:latest terraform -chdir='{{.CLI_ARGS}}' state pull > terraform.tfstate
 
-
   tfdkr-run:
     desc: Run terraform in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -151,7 +146,7 @@ tasks:
 
   sk-run:
     desc: Run skaffold in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       # https://github.com/GoogleContainerTools/skaffold/issues/4033
       # - docker run --rm -v $(pwd):/app -w /app gcr.io/k8s-skaffold/skaffold:latest {{.CLI_ARGS}}
@@ -160,15 +155,14 @@ tasks:
 
   bz-run:
     desc: Run bazel in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       # https://images.chainguard.dev/directory/image/bazel/overview
       - docker run --rm --entrypoint bash -v $(pwd):/home/bazel cgr.dev/chainguard/bazel:latest -- bazel {{.CLI_ARGS}}
 
-
   bu-run:
     desc: Run butane in currect directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       # https://docs.fedoraproject.org/en-US/fedora-coreos/producing-ign/
       - |
@@ -176,28 +170,34 @@ tasks:
         --volume $(pwd):/pwd --workdir /pwd quay.io/coreos/butane:release \
         --pretty --strict my_config.bu > transpiled_config.ign
 
-
   openapi-generator-run:
     desc: Run openapi-generator in current directory
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       # https://openapi-generator.tech/
       # https://hub.docker.com/u/openapitools
       - docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate -i /local/{{.CLI_ARGS}} -g go -o /local/out/go
 
-
   stripe-run:
     desc: Run stripe in current directory
-    dir: '{{.USER_WORKING_DIR}}}'
+    dir: "{{.USER_WORKING_DIR}}}"
     cmds:
       # - docker run --rm -it stripe/stripe-cli:latest customers list --api-key sk_test_51PZleGCMY5ml3pDvjOyLkwBpZegXFhyPyZAcwzrnxfYGyAvvPlm3qfKHOvKnrsYHucsFI36mrd8SXJHeXnK2HSqG00W8yL5oMT
       # - docker run --rm -v $(pwd):/app -w /app stripe/stripe-cli {{.CLI_ARGS}}
       - docker run --rm -it stripe/stripe-cli:latest {{.CLI_ARGS}}
 
+  k9s-run:
+    desc: Run k9s in container
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - |
+        docker run --rm -it \
+        -v ~/.kube/config:/root/.kube/config \
+        quay.io/derailed/k9s
 
   debug-amd64-build:
     desc: Build x86_64 debug container
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker buildx build . \
@@ -207,7 +207,7 @@ tasks:
 
   debug-amd64-run:
     desc: Run x86_64 debug container
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -217,7 +217,7 @@ tasks:
 
   debug-fedora-amd64-run:
     desc: Run x86_64 debug container
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - |
         docker run --rm -it \
@@ -234,7 +234,6 @@ tasks:
         #    --dockerfile /workspace/Dockerfile \
         #    --destination "gcr.io/$PROJECT_ID/$IMAGE_NAME:$TAG" \
         #    --context dir:///workspace/
-
 
   open:
     desc: Open docker taskfile
