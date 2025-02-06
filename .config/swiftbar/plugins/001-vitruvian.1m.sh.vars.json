@@ -1,0 +1,12 @@
+{
+	"VAR_COUNTER": 1,
+	"VAR_FONT_COLOR": "red",
+	"VAR_FONT_SIZE": 16,
+	"VAR_GCP_PRJ_FILTER": "labels[flyr_project_type]:ooms AND labels[flyr_tenant]:rx",
+	"VAR_HOME": "/Users/james",
+	"VAR_MENU_BAR_TEXT": "🐳",
+	"VAR_NAME": "James",
+	"VAR_SELECTED_COLOR": "green",
+	"VAR_STYLE": "normal",
+	"VAR_VERBOSE": true
+}
