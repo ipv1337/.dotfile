@@ -8,8 +8,8 @@ export EDITOR_IDE='cursor'
 export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
 
 # Podman: GPU Support
-export CONTAINERS_MACHINE_PROVIDER=libkrun
-export DOCKER_HOST=unix:///var/run/docker.sock
+#export CONTAINERS_MACHINE_PROVIDER=libkrun
+#export DOCKER_HOST=unix:///var/run/docker.sock
 
 # K9s
 export K9S_FEATURE_GATE_NODE_SHELL=true
