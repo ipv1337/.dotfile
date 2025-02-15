@@ -1,107 +1,107 @@
 # https://taskfile.dev
 
-version: '3'
+version: "3"
 
 tasks:
-
   default:
     desc: List all kubectl tasks
-    prefix: ⚙️ 
+    prefix: ⚙️
     cmds:
       - task {{default "--list" .CLI_ARGS}} | grep --color=always 'kubectl:'
 
-
   cluster-info:
     desc: Display cluster info
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl cluster-info
 
-
   pods:
     desc: List pods in current namespace
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get pods
 
   pods-all:
     desc: List pods in all namespaces
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get pods --all-namespaces
 
-  pod-debug-amd64-run:
+  pod-debug-alpine-run:
     desc: Run debug pod in current namespace
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - kubectl run -i --tty --rm debug --privileged=true --image=alpine --restart=Never --overrides='{"spec":{"template":{"spec":{"containers":[{"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_ADMIN","NET_RAW"]}}}]}}}}' --restart=Never -- sh
+    interactive: true
+
+  pod-debug-fedora-amd64-run:
+    desc: Run debug pod in current namespace
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl run -i --tty --rm debug --privileged=true --image=amd64/fedora --restart=Never --overrides='{"spec":{"template":{"spec":{"containers":[{"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_ADMIN","NET_RAW"]}}}]}}}}' --restart=Never -- sh
     interactive: true
 
-  pod-debug-run:
+  pod-debug-fedora-run:
     desc: Run debug pod in current namespace
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
-      - kubectl run -i --tty --rm debug --image=fedora --restart=Never --overrides='{"spec":{"template":{"spec":{"containers":[{"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_ADMIN","NET_RAW"]}}}]}}}}' --restart=Never -- sh
+      - kubectl run -i --tty --rm debug --privileged=true --image=fedora --restart=Never --overrides='{"spec":{"template":{"spec":{"containers":[{"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_ADMIN","NET_RAW"]}}}]}}}}' --restart=Never -- sh
       # - kubectl run -i --tty --rm debug --image={{.IMAGE | default("alpine")}} --restart=Never -- sh
       # {"spec":{"template":{"spec":{"containers":[{"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_ADMIN","NET_RAW"]}}}]}}}}
     interactive: true
 
-
   services:
     desc: List services in current namespace
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get services
 
   services-all:
     desc: List services in all namespaces
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get services --all-namespaces
 
   service-generate:
     desc: Generate service yaml
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl create service nodeport myapp --tcp=80:80 --dry-run=client -o=yaml
 
-
   deployments:
     desc: List deployments in current namespace
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get deployments
 
   deployments-all:
     desc: List deployments in all namespaces
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get deployments --all-namespaces
 
   deployment-generate:
     desc: Generate deployment yaml
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl create deployment myapp --image=alpine --dry-run=client -o=yaml
 
-
   sa:
     desc: List service accounts in current namespace
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get sa
 
   sa-all:
     desc: List service accounts in all namespaces
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get sa --all-namespaces
-
 
   # https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#registry-secret-existing-credentials
   secret-regcred-create:
     desc: Create a secret for docker registry credentials
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       # - kubectl create secret docker-registry regcred --docker-server={{.DOCKER_SERVER}} --docker-username={{.DOCKER_USERNAME}} --docker-password={{.DOCKER_PASSWORD}} --docker-email={{.DOCKER_EMAIL}}
       - |
@@ -109,19 +109,18 @@ tasks:
         --from-file=.dockerconfigjson={{.HOME}}/.docker/config.json \
         --type=kubernetes.io/dockerconfigjson \
         --namespace={{.CLI_ARGS}}
-  
+
   secret-regcred-get:
     desc: Get the secret for docker registry credentials
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get secret regcred --output=yaml --namespace={{.CLI_ARGS}}
-  
+
   secret-regcred-decode:
     desc: Decode the secret for docker registry credentials
-    dir: '{{.USER_WORKING_DIR}}'
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - kubectl get secret regcred --output="jsonpath={.data.\.dockerconfigjson}" --namespace={{.CLI_ARGS}} | base64 --decode
-
 
   open:
     desc: Open kubectl taskfile
@@ -129,6 +128,4 @@ tasks:
     cmds:
       - open {{.HOME}}/.task/kubectl/Taskfile.yml
     silent: true
-
-
 # https://serverascode.com/2021/08/24/run-privileged-pod-kubectl-run.html
