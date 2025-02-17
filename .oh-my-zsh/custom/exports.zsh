@@ -1,5 +1,7 @@
 export PATH=$HOME/bin:/opt/homebrew/opt/openjdk/bin:/usr/local/bin:$PATH
 
+export TERM=xterm-256color
+
 # Default editors
 export EDITOR='nvim'
 export EDITOR_IDE='cursor'
