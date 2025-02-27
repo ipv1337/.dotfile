@@ -6,6 +6,9 @@ alias cat="bat"
 alias v="nvim"
 alias vi="nvim"
 
+alias lc='clear; l'
+alias llc='clear; ll'
+
 #alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#$(scutil --get LocalHostName)"
 alias switch="darwin-rebuild switch --flake github:ipv1337/nix-darwin#James-MacBook-Pro"
 
