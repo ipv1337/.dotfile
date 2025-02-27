@@ -7,6 +7,7 @@ export EDITOR='nvim'
 export EDITOR_IDE='cursor'
 
 # Language specific
+# /opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home
 export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
 
 # Podman: GPU Support

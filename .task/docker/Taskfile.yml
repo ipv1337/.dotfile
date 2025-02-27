@@ -241,3 +241,6 @@ tasks:
     cmds:
       - open {{.HOME}}/.task/docker/Taskfile.yml
     silent: true
+
+    ## https://github.com/oracle/opengrok/blob/master/docker/README.md
+    #docker run --rm -d -v ~/Workspace/gh/lab:/opengrok/src -p 8080:8080 opengrok/docker:latest
