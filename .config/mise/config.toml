@@ -3,7 +3,6 @@
 [tools]
 terraform = "latest"
 bazelisk = "latest"
-buildifier = "latest"
 argocd = "latest"
 node = "23"
 
