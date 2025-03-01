@@ -1,0 +1,19 @@
+# Lines starting with # are comments
+
+# Always extract audio
+#-x
+
+# Do not copy the mtime
+--no-mtime
+
+# Use this proxy
+#--proxy 127.0.0.1:3128
+
+# Save all videos under YouTube directory in your home directory
+-o ~/tmp/%(title)s.%(ext)s
+
+#--cookies-from-browser chrome
+#--cookies ~/.config/yt-dlp/www.youtube.com_cookies.txt
+
+# Sym linked from /Users/james/Library/Application Support/Google/Chrome/Profile\ 2
+--cookies-from-browser chrome:Private
