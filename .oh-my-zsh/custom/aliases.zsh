@@ -1,5 +1,5 @@
 alias zsrc="source ~/.zshrc"
-alias zdot="cd ${HOME}/.dotfile && stow . && cd -"
+alias zdot="cd ${HOME}/.dotfile && git pull --ff-only && stow . && cd -"
 
 alias c="bat"
 alias cat="bat"
