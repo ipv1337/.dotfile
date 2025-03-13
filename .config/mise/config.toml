@@ -2,9 +2,10 @@
 
 [tools]
 terraform = "latest"
+pulumi = "latest"
 bazelisk = "latest"
 argocd = "latest"
-node = "23"
+node = "latest"
 
 [settings]
 # plugins can read the versions files used by other version managers (if enabled by the plugin)
